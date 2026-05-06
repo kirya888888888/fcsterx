@@ -1,0 +1,34 @@
+/* ===== ЛОГОТИП ===== */
+.logo {
+  width: 120px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  margin-bottom: 10px;
+}
+
+/* ===== АДАПТАЦИЯ ПОД ТЕЛЕФОН ===== */
+@media (max-width: 600px) {
+
+  header h1 {
+    font-size: 28px;
+  }
+
+  nav a {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .players {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .player {
+    width: 90%;
+  }
+
+  .logo {
+    width: 90px;
+  }
+}
