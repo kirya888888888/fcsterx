@@ -4,7 +4,308 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ФК Стерх - Расписание тренировок</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0015 0%, #1a0033 50%, #0f0020 100%);
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+
+        .title-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .clock-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #8AC5FF, #ffffff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .schedule-section {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .schedule-card {
+            background: rgba(30, 10, 70, 0.6);
+            border: 2px solid rgba(156, 39, 176, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #9945ff, #7c3aed);
+        }
+
+        .schedule-card:hover {
+            background: rgba(40, 15, 90, 0.8);
+            border-color: rgba(156, 39, 176, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(156, 39, 176, 0.2);
+        }
+
+        .day-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .time {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .info-section {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .info-card {
+            background: rgba(30, 10, 70, 0.6);
+            border: 2px solid rgba(156, 39, 176, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #9945ff, #7c3aed);
+        }
+
+        .info-card:hover {
+            background: rgba(40, 15, 90, 0.8);
+            border-color: rgba(156, 39, 176, 0.6);
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon {
+            font-size: 28px;
+        }
+
+        .ticket-info {
+            background: rgba(50, 20, 100, 0.5);
+            border: 1px solid rgba(156, 39, 176, 0.4);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .email-badge {
+            background: linear-gradient(135deg, #c084fc, #a78bfa);
+            padding: 12px 16px;
+            border-radius: 20px;
+            text-align: center;
+            color: #000;
+            font-weight: 600;
+            margin: 12px 0;
+            word-break: break-all;
+        }
+
+        .team-card {
+            background: rgba(30, 10, 70, 0.6);
+            border: 2px solid rgba(156, 39, 176, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #9945ff, #7c3aed);
+        }
+
+        .team-card:hover {
+            background: rgba(40, 15, 90, 0.8);
+            border-color: rgba(156, 39, 176, 0.6);
+        }
+
+        .team-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+            border: 2px solid rgba(156, 39, 176, 0.4);
+        }
+
+        .team-info h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .team-info p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .button {
+            background: rgba(156, 39, 176, 0.2);
+            border: 2px solid rgba(156, 39, 176, 0.5);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .button:hover {
+            background: rgba(156, 39, 176, 0.4);
+            border-color: rgba(156, 39, 176, 0.8);
+        }
+
+        .music-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #9945ff, #7c3aed);
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(156, 39, 176, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .music-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(156, 39, 176, 0.6);
+        }
+
+        .music-button.playing {
+            animation: pulse 1s ease-in-out infinite, float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 8px 24px rgba(156, 39, 176, 0.4); }
+            50% { box-shadow: 0 8px 40px rgba(156, 39, 176, 0.8); }
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 40px;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .music-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            .title { font-size: 28px; }
+            .section-title { font-size: 22px; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -20,17 +321,14 @@
                 <div class="day-title">ВТОРНИК</div>
                 <div class="time">15:30</div>
             </div>
-
             <div class="schedule-card">
                 <div class="day-title">ЧЕТВЕРГ</div>
                 <div class="time">15:30</div>
             </div>
-
             <div class="schedule-card">
                 <div class="day-title">СУББОТА</div>
                 <div class="time">14:00</div>
             </div>
-
             <div class="schedule-card">
                 <div class="day-title">ВОСКРЕСЕНЬЕ</div>
                 <div class="time">14:00</div>
@@ -43,14 +341,11 @@
                     <span class="icon">🎫</span>
                     <span>БИЛЕТЫ НА МАТЧИ — всего 40₽</span>
                 </div>
-
                 <div class="ticket-info">
-                    <div class="price">💰 40 рублей — пропуск на домашние игры «Стерха». Для покупки напишите на почту: <strong>Имя, Номер матча, Дата</strong></div>
+                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">💰 40 рублей — пропуск на домашние игры «Стерха»</div>
+                    <div style="margin-bottom: 12px;">Для покупки напишите на почту: <strong>Имя, Номер матча, Дата</strong></div>
                     <div class="email-badge">atashkas123s@gmail.com</div>
-                    <div style="margin-top: 12px; font-size: 14px;">
-                        <span class="lightning-icon">⚡</span>
-                        <strong>Ближайшие матчи</strong> анонсируем в MAX-канале и YouTube.
-                    </div>
+                    <div style="margin-top: 12px;">⚡ <strong>Ближайшие матчи</strong> анонсируем в MAX-канале и YouTube</div>
                 </div>
             </div>
         </div>
@@ -59,14 +354,13 @@
             <div class="info-card">
                 <div class="section-title">
                     <span class="icon">📱</span>
-                    <span>Наш MAX-канал</span>
+                    <span>Наш MAX-канал и YouTube</span>
                 </div>
-
                 <div class="button-group">
-                    <div class="button" onclick="window.open('https://max.ru/join/_oU90h9VhfJGNwLY9jTVZG7x-fygJeeerzgrgaMuO8k', '_blank')">👥 Присоединяйся к «Стерху» в MAX:</div>
-                    <div class="button" onclick="window.open('https://max.ru/join/_oU90h9VhfJGNwLY9jTVZG7x-fygJeeerzgrgaMuO8k', '_blank')" style="background: rgba(156, 39, 176, 0.3); border-color: rgba(156, 39, 176, 0.6);">MAX / ФК Стерх</div>
-                    <div class="button" onclick="window.open('https://max.ru/join/_oU90h9VhfJGNwLY9jTVZG7x-fygJeeerzgrgaMuO8k', '_blank')">🔔 Подписывайся!</div>
-                    <div class="button" onclick="window.open('https://youtube.com/@fcsterh?si=rnPd46S-UCEG7h-R', '_blank')">📺 YouTube канал</div>
+                    <button class="button" onclick="window.open('https://max.ru/join/_oU90h9VhfJGNwLY9jTVZG7x-fygJeeerzgrgaMuO8k', '_blank')">👥 Присоединяйся к Стерху в MAX</button>
+                    <button class="button" onclick="window.open('https://max.ru/join/_oU90h9VhfJGNwLY9jTVZG7x-fygJeeerzgrgaMuO8k', '_blank')">MAX / ФК Стерх</button>
+                    <button class="button" onclick="window.open('https://youtube.com/@fcsterh?si=rnPd46S-UCEG7h-R', '_blank')">📺 YouTube канал</button>
+                    <button class="button" onclick="window.open('https://max.ru/join/_oU90h9VhfJGNwLY9jTVZG7x-fygJeeerzgrgaMuO8k', '_blank')">🔔 Подписывайся!</button>
                 </div>
             </div>
         </div>
@@ -102,12 +396,55 @@
         </div>
     </div>
 
-    <button class="music-button" id="musicBtn" title="Включить/выключить музыку">🎵</button>
+    <button class="music-button" id="musicBtn" title="Включить/выключить м��зыку">🎵</button>
 
     <audio id="bgMusic" loop preload="auto">
         <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
     </audio>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const musicBtn = document.getElementById('musicBtn');
+            const bgMusic = document.getElementById('bgMusic');
+
+            bgMusic.volume = 0.5;
+
+            function playMusic() {
+                bgMusic.play().then(() => {
+                    musicBtn.textContent = '🎶';
+                    musicBtn.classList.add('playing');
+                }).catch(err => console.log('Ошибка:', err));
+            }
+
+            function stopMusic() {
+                bgMusic.pause();
+                musicBtn.textContent = '🎵';
+                musicBtn.classList.remove('playing');
+            }
+
+            musicBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (bgMusic.paused) {
+                    playMusic();
+                } else {
+                    stopMusic();
+                }
+            });
+
+            window.addEventListener('load', function() {
+                setTimeout(playMusic, 500);
+            });
+
+            bgMusic.addEventListener('play', () => {
+                musicBtn.textContent = '🎶';
+                musicBtn.classList.add('playing');
+            });
+
+            bgMusic.addEventListener('pause', () => {
+                musicBtn.textContent = '🎵';
+                musicBtn.classList.remove('playing');
+            });
+        });
+    </script>
 </body>
 </html>
